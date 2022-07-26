@@ -26,8 +26,8 @@ RUN apt-get install -y libgd-dev php-gd \
                        php7.4-mysql
 
 
-COPY ./config/php.ini /usr/local/etc/php/conf.d/
-COPY ./config/apache-local.conf /etc/apache2/sites-available/000-default.conf
+COPY config/php.ini /usr/local/etc/php/conf.d/
+COPY config/apache.conf /etc/apache2/sites-available/000-default.conf
 
 # Install composer (php package manager)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -37,9 +37,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh \
     && apt-get install -y nodejs \
     && rm /tmp/nodesource_setup.sh
 
-COPY ./config/service/ /service/
+COPY config/service/ /service/
 RUN chmod -R 777 /service
-
-COPY ./.env ./.env
 
 CMD ["/service/start.sh"]
